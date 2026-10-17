@@ -1,3 +1,4 @@
+import { setKrwAmount } from './currency.js';
 export function initCalculator() {
   const nightsSlider = document.getElementById('calcNights');
   const travelersSlider = document.getElementById('calcTravelers');
@@ -55,6 +56,8 @@ export function initCalculator() {
     savingAmountEl.textContent = `$${totalSavings.toLocaleString()}`;
     hotelTotalEl.textContent = `$${hotelTotal.toLocaleString()}`;
     condoTotalEl.textContent = `$${condoTotal.toLocaleString()}`;
+    setKrwAmount(document.getElementById('calcTotalSavingsKrw'), totalSavings);
+    setKrwAmount(document.getElementById('calcCondoTotalKrw'), condoTotal);
 
     bResortEl.textContent = `+$${resortSavings.toLocaleString()}`;
     bParkingEl.textContent = `+$${parkingSavings.toLocaleString()}`;

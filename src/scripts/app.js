@@ -4,6 +4,7 @@ import { initRoomGallery } from './rooms.js';
 import { renderInstagramFeed } from './instagram.js';
 import { initBlog } from './blog.js';
 import { initBookingWidget } from './booking.js';
+import { initCurrency } from './currency.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize Internationalization
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Initialize Rooms and Lightbox Gallery
   initRoomGallery();
+  initCurrency();
 
   // 4. Render Instagram Feed
   renderInstagramFeed();

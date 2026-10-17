@@ -257,6 +257,7 @@ export function initI18n() {
 
 function updateDOM() {
   const texts = i18nData[currentLang];
+  document.documentElement.lang = currentLang;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (texts[key]) {
@@ -268,5 +269,6 @@ function updateDOM() {
   if (langBtn) {
     langBtn.innerHTML = currentLang === 'ko' ? '🇺🇸 <span class="lang-label">English</span>' : '🇰🇷 <span class="lang-label">한국어</span>';
   }
+  document.dispatchEvent(new CustomEvent('langchange'));
   document.documentElement.lang = currentLang;
 }

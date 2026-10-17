@@ -1,3 +1,5 @@
+import { setKrwAmount, formatKrw } from './currency.js';
+
 export function initBookingWidget() {
   const checkInInput = document.getElementById('bookCheckIn');
   const checkOutInput = document.getElementById('bookCheckOut');
@@ -11,6 +13,7 @@ export function initBookingWidget() {
   const discountValEl = document.getElementById('quoteDiscountVal');
   const taxValEl = document.getElementById('quoteTax');
   const totalValEl = document.getElementById('quoteTotal');
+  const totalKrwEl = document.getElementById('quoteTotalKrw');
 
   const btnKakao = document.getElementById('btnKakaoBook');
   const btnCard = document.getElementById('btnCardBook');
@@ -117,12 +120,13 @@ export function initBookingWidget() {
 
     if (taxValEl) taxValEl.textContent = `$${taxes.toLocaleString()}`;
     if (totalValEl) totalValEl.textContent = `$${total.toLocaleString()}`;
+    setKrwAmount(totalKrwEl, total);
   }
 
   // KakaoTalk inquiry button click
   if (btnKakao) {
     btnKakao.addEventListener('click', () => {
-      const msg = `[와이키키 반얀 직예약 문의]\n- 객실: ${currentQuote.roomName}\n- 일정: ${currentQuote.checkIn} ~ ${currentQuote.checkOut} (${currentQuote.nights}박)\n- 인원: ${currentQuote.guests}명\n- 예상 견적: $${currentQuote.total.toLocaleString()} (주차비 $0, 리조트피 $0 포함)\n\n예약 가능 여부와 계좌이체/카드 결제 안내 부탁드립니다!`;
+      const msg = `[와이키키 반얀 직예약 문의]\n- 객실: ${currentQuote.roomName}\n- 일정: ${currentQuote.checkIn} ~ ${currentQuote.checkOut} (${currentQuote.nights}박)\n- 인원: ${currentQuote.guests}명\n- 예상 견적: $${currentQuote.total.toLocaleString()}${formatKrw(currentQuote.total) ? ` (${formatKrw(currentQuote.total)})` : ''} (주차비 $0, 리조트피 $0 포함)\n\n예약 가능 여부와 계좌이체/카드 결제 안내 부탁드립니다!`;
       
       // Fallback: copy to clipboard and open KakaoTalk channel
       navigator.clipboard.writeText(msg).then(() => {

@@ -202,6 +202,7 @@
             <div class="booking-price">
               $249 <span>/ 1박 기본요금</span>
             </div>
+            <p class="krw-inline" data-krw-usd="249" data-krw-suffix=" / 1박"></p>
             <p style="font-size:0.85rem; color:var(--color-success); font-weight:600;" data-i18n="bookCardSub">
               ✨ 에어비앤비 대비 수수료 없는 10% 할인 혜택
             </p>
@@ -260,6 +261,8 @@
                 <span>예상 총 결제금액</span>
                 <span id="quoteTotal">$1,475</span>
               </div>
+              <div class="krw-total" id="quoteTotalKrw"></div>
+              <p class="krw-rate" id="krwRateNote"></p>
             </div>
 
             <button id="btnKakaoBook" class="btn-kakao" style="width:100%; justify-content:center; padding:14px;" data-i18n="btnKakaoBook">
@@ -357,6 +360,7 @@
                 <span id="calcTotalSavings">$1,640</span>
                 <span>절약!</span>
               </div>
+              <div class="krw-on-dark" id="calcTotalSavingsKrw"></div>
 
               <div style="display:flex; justify-content:space-between; font-size:0.92rem; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:12px;">
                 <span data-i18n="hotelTotalLabel">와이키키 4성급 호텔 예상 총액:</span>
@@ -367,6 +371,7 @@
                 <span data-i18n="condoTotalLabel">우리 콘도 직예약 총액:</span>
                 <span id="calcCondoTotal" style="color:var(--color-gold);">$1,475</span>
               </div>
+              <div class="krw-on-dark" id="calcCondoTotalKrw" style="text-align:right; margin-top:-16px;"></div>
 
               <div class="breakdown-list">
                 <div class="breakdown-item">
@@ -440,6 +445,7 @@
               <div class="room-bottom">
                 <div class="room-price-tag">
                   <span class="room-price-val">$249 / 1박</span>
+                  <span class="krw-inline" data-krw-usd="249" data-krw-suffix=" / 1박"></span>
                   <span class="room-price-sub">✓ 리조트피 $0 · 주차비 $0 포함</span>
                 </div>
                 <div style="display:flex; gap:10px;">
@@ -486,6 +492,7 @@
               <div class="room-bottom">
                 <div class="room-price-tag">
                   <span class="room-price-val">$289 / 1박</span>
+                  <span class="krw-inline" data-krw-usd="289" data-krw-suffix=" / 1박"></span>
                   <span class="room-price-sub">✓ 리조트피 $0 · 주차비 $0 포함</span>
                 </div>
                 <a href="#booking" class="btn-gold" data-i18n="btnInquireRoom">예약 문의하기</a>
