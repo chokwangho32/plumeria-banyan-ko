@@ -15,6 +15,15 @@ const RATE_SOURCES = [
 
 const CACHE_KEY = 'pvr_usdkrw';
 
+// Third-party rate data is untrusted: ignore anything outside a plausible
+// USD→KRW band so a bad or tampered response never shows a wrong price.
+const MIN_PLAUSIBLE_RATE = 900;
+const MAX_PLAUSIBLE_RATE = 2200;
+
+function isPlausibleRate(value) {
+  return Number.isFinite(value) && value >= MIN_PLAUSIBLE_RATE && value <= MAX_PLAUSIBLE_RATE;
+}
+
 let rate = null;
 
 function todayKey() {
@@ -24,7 +33,7 @@ function todayKey() {
 function readCache() {
   try {
     const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-    if (cached && cached.day === todayKey() && cached.rate > 0) return cached.rate;
+    if (cached && cached.day === todayKey() && isPlausibleRate(cached.rate)) return cached.rate;
   } catch (e) {
     // storage unavailable — fetch instead
   }
@@ -45,7 +54,7 @@ async function fetchRate() {
       const res = await fetch(source.url);
       if (!res.ok) continue;
       const value = Number(source.pick(await res.json()));
-      if (value > 0) return value;
+      if (isPlausibleRate(value)) return value;
     } catch (e) {
       // try the next source
     }
