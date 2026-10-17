@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.DS_Store
+.vercel/
+
+# Internal — keep out of the public repo
+MARKETING_OPERATIONS_MANUAL.md
+scratch_bundle.js
+
+# Server-specific deploy files (contain server address)
+deploy/

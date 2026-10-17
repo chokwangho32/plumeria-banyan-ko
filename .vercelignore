@@ -1,0 +1,6 @@
+# Internal / not part of the site
+MARKETING_OPERATIONS_MANUAL.md
+scratch_bundle.js
+deploy/
+dist/
+node_modules/
