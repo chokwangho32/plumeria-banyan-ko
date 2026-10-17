@@ -57,6 +57,16 @@ export function initRoomGallery() {
 
   if (triggerBtn) triggerBtn.addEventListener('click', () => openModal(0));
   if (roomPreview) roomPreview.addEventListener('click', () => openModal(0));
+
+  // Top-of-page photo mosaic
+  document.querySelectorAll('[data-photo-index]').forEach((el) => {
+    el.addEventListener('click', () => openModal(Number(el.dataset.photoIndex)));
+  });
+  document.querySelectorAll('[data-scroll-to]').forEach((el) => {
+    el.addEventListener('click', () => {
+      document.querySelector(el.dataset.scrollTo)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   
   if (prevBtn) prevBtn.addEventListener('click', (e) => {
