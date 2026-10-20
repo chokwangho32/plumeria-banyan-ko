@@ -1,6 +1,9 @@
+import { markdownToText } from './markdown.js';
+
 export const blogArticles = [
   {
     id: 'blog-1',
+    slug: 'waikiki-hotel-parking-free',
     title: '하와이 호텔 주차비 하루 8만원? 와이키키 반얀 무료 주차로 50만원 아낀 솔직 후기',
     tag: '렌터카 & 주차 꿀팁',
     date: '2026.10.15',
@@ -37,6 +40,7 @@ export const blogArticles = [
   },
   {
     id: 'blog-2',
+    slug: 'hawaii-family-trip-kitchen-condo',
     title: '아이와 함께하는 하와이 가족여행: 취사 가능한 콘도(와이키키 반얀)를 선택해야 하는 이유',
     tag: '아이동반 & 가족여행',
     date: '2026.10.12',
@@ -65,6 +69,7 @@ export const blogArticles = [
   },
   {
     id: 'blog-3',
+    slug: 'hawaii-resort-fee-guide',
     title: '2026 하와이 리조트피(Resort Fee)의 진실과 0원으로 피하는 완벽 가이드',
     tag: '숙소 가성비 가이드',
     date: '2026.10.08',
@@ -90,104 +95,49 @@ export const blogArticles = [
   }
 ];
 
+// Each article is also built as its own crawlable page at blog/<slug>/
+export function articlePath(article) {
+  return `blog/${article.slug}/`;
+}
+
 export function initBlog() {
   const grid = document.getElementById('blogGrid');
-  const modal = document.getElementById('blogModal');
-  const modalTitle = document.getElementById('blogModalTitle');
-  const modalDate = document.getElementById('blogModalDate');
-  const modalContent = document.getElementById('blogModalContent');
-  const modalClose = document.getElementById('blogModalClose');
-  const copyBtn = document.getElementById('btnCopyArticle');
+  if (!grid) return;
 
-  let activeArticle = null;
-
-  if (grid) {
-    grid.innerHTML = blogArticles.map(a => `
-      <article class="blog-card">
-        <div class="blog-img-wrap">
-          <img src="${a.img}" alt="${a.title}" loading="lazy" />
+  grid.innerHTML = blogArticles.map(a => `
+    <article class="blog-card">
+      <a class="blog-img-wrap" href="${articlePath(a)}">
+        <img src="${a.img}" alt="${a.title}" loading="lazy" />
+      </a>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>${a.tag}</span>
+          <span>· ${a.date}</span>
         </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span>${a.tag}</span>
-            <span>· ${a.date}</span>
-          </div>
-          <h3 class="blog-title">${a.title}</h3>
-          <p class="blog-snippet">${a.snippet}</p>
-          <div class="blog-action">
-            <button class="blog-link" data-read-id="${a.id}">본문 읽기 →</button>
-            <button class="btn-copy-naver" data-copy-id="${a.id}">📋 네이버 복사용</button>
-          </div>
+        <h3 class="blog-title"><a href="${articlePath(a)}">${a.title}</a></h3>
+        <p class="blog-snippet">${a.snippet}</p>
+        <div class="blog-action">
+          <a class="blog-link" href="${articlePath(a)}">본문 읽기 →</a>
+          <button class="btn-copy-naver" data-copy-id="${a.id}">📋 네이버 복사용</button>
         </div>
-      </article>
-    `).join('');
+      </div>
+    </article>
+  `).join('');
 
-    grid.addEventListener('click', (e) => {
-      const readBtn = e.target.closest('[data-read-id]');
-      if (readBtn) {
-        const id = readBtn.getAttribute('data-read-id');
-        openArticle(id);
-      }
-
-      const copyBtnClick = e.target.closest('[data-copy-id]');
-      if (copyBtnClick) {
-        const id = copyBtnClick.getAttribute('data-copy-id');
-        copyToClipboard(id, copyBtnClick);
-      }
-    });
-  }
-
-  function openArticle(id) {
-    const article = blogArticles.find(a => a.id === id);
-    if (!article || !modal) return;
-    activeArticle = article;
-    modalTitle.textContent = article.title;
-    modalDate.textContent = `${article.tag} · ${article.date}`;
-    modalContent.innerHTML = article.content.replace(/\n/g, '<br>');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+  grid.addEventListener('click', (e) => {
+    const copyBtn = e.target.closest('[data-copy-id]');
+    if (copyBtn) copyToClipboard(copyBtn.getAttribute('data-copy-id'), copyBtn);
+  });
 
   function copyToClipboard(id, btn) {
     const article = blogArticles.find(a => a.id === id);
     if (!article) return;
-    navigator.clipboard.writeText(article.content).then(() => {
+    navigator.clipboard.writeText(markdownToText(article.content)).then(() => {
       const originalText = btn.textContent;
       btn.textContent = '✅ 복사 완료!';
       setTimeout(() => {
         btn.textContent = originalText;
       }, 2000);
-    });
-  }
-
-  if (modalClose) {
-    modalClose.addEventListener('click', () => {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-  }
-
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
-
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      if (activeArticle) {
-        copyToClipboard(activeArticle.id, copyBtn);
-      }
     });
   }
 }

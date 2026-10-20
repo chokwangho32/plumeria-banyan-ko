@@ -25,6 +25,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Optional repo Variables (Settings → Secrets and variables → Actions → Variables)
+          SITE_URL: ${{ vars.SITE_URL }}
+          KAKAO_CHANNEL_URL: ${{ vars.KAKAO_CHANNEL_URL }}
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          NAVER_SITE_VERIFICATION: ${{ vars.NAVER_SITE_VERIFICATION }}
+          TAT_LICENSE: ${{ vars.TAT_LICENSE }}
+          GET_LICENSE: ${{ vars.GET_LICENSE }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

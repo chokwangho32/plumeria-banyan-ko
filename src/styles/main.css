@@ -1,5 +1,7 @@
 :root {
   --color-primary: #2B93A6;
+  --color-primary-text: #1D6E7D; /* primary hue dark enough for small text (WCAG AA) */
+  --color-pink-text: #B33A63;
   --color-primary-light: #4FAFC0;
   --color-primary-dark: #24425A;
   --color-pink: #E87FA0;
@@ -116,7 +118,7 @@ img {
 
 .announcement-bar .badge {
   background: var(--color-surface);
-  color: var(--color-pink);
+  color: var(--color-pink-text);
   font-weight: 700;
   padding: 2px 10px;
   border-radius: var(--radius-full);
@@ -234,7 +236,7 @@ img {
   border: 1px solid var(--color-border);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   background: var(--color-surface);
   transition: var(--transition);
 }
@@ -246,7 +248,7 @@ img {
 
 /* Primary CTA Buttons */
 .btn-primary {
-  background: var(--color-primary);
+  background: #227F8F; /* slightly deeper than --color-primary so white text passes AA */
   color: #FFFFFF;
   padding: 12px 24px;
   border-radius: var(--radius-full);
@@ -710,7 +712,7 @@ img {
   display: inline-block;
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   margin-bottom: 12px;
@@ -785,7 +787,7 @@ img {
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   background: var(--color-surface-subtle);
   padding: 2px 10px;
   border-radius: var(--radius-full);
@@ -1324,7 +1326,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   gap: 12px;
   font-size: 0.8rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 10px;
@@ -1355,7 +1357,7 @@ input[type="range"]::-webkit-slider-thumb {
 .blog-link {
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1367,6 +1369,114 @@ input[type="range"]::-webkit-slider-thumb {
   color: #FFFFFF;
   padding: 5px 12px;
   border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.blog-img-wrap {
+  display: block;
+}
+
+.blog-title a {
+  color: inherit;
+}
+
+.blog-title a:hover {
+  color: var(--color-primary);
+}
+
+/* Blog article pages (blog/<slug>/index.html, generated at build time) */
+.article-page {
+  padding: 48px 0 80px;
+}
+
+.article-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.article-breadcrumb {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+.article-breadcrumb a {
+  color: var(--color-primary-text);
+}
+
+.article-title {
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  line-height: 1.3;
+  margin: 10px 0 24px;
+}
+
+.article-hero {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  margin-bottom: 32px;
+}
+
+.article-body {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--color-text);
+}
+
+.article-body h2 {
+  font-size: 1.35rem;
+  margin: 40px 0 14px;
+}
+
+.article-body p {
+  margin-bottom: 18px;
+}
+
+.article-body ul {
+  list-style: disc;
+  padding-left: 22px;
+  margin-bottom: 18px;
+}
+
+.article-body li {
+  margin-bottom: 6px;
+}
+
+.article-cta {
+  margin-top: 48px;
+  padding: 28px;
+  border-radius: var(--radius-xl);
+  background: var(--color-mint-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.article-cta p {
+  font-weight: 700;
+  margin: 0;
+}
+
+.article-related {
+  margin-top: 48px;
+}
+
+.article-related h2 {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.article-related ul {
+  list-style: disc;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.article-related a {
+  color: var(--color-primary-text);
   font-weight: 600;
 }
 
@@ -1486,7 +1596,7 @@ input[type="range"]::-webkit-slider-thumb {
   margin-bottom: 12px;
 }
 
-.footer-links h5 {
+.footer-links h3 {
   color: #FFFFFF;
   font-size: 1rem;
   margin-bottom: 18px;
@@ -1727,7 +1837,7 @@ input[type="range"]::-webkit-slider-thumb {
   .brand-name { font-size: 17px; letter-spacing: 0.12em; }
   .brand-sub { font-size: 8.5px; letter-spacing: 0.14em; }
   .header-actions .lang-btn { padding: 6px 12px; font-size: 1rem; }
-  .lang-label { display: none; }
+  .lang-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .hero-tag { font-size: 0.78rem; padding: 6px 12px; }
 }
 

@@ -1,4 +1,5 @@
 import { setKrwAmount, formatKrw } from './currency.js';
+import { KAKAO_CHANNEL_URL } from './config.js';
 
 export function initBookingWidget() {
   const checkInInput = document.getElementById('bookCheckIn');
@@ -131,9 +132,9 @@ export function initBookingWidget() {
       // Fallback: copy to clipboard and open KakaoTalk channel
       navigator.clipboard.writeText(msg).then(() => {
         alert('문의 내용이 복사되었습니다! 카카오톡 상담 채널로 연결됩니다.\n\n' + msg);
-        window.open('https://pf.kakao.com', '_blank');
+        window.open(KAKAO_CHANNEL_URL, '_blank');
       }).catch(() => {
-        window.open('https://pf.kakao.com', '_blank');
+        window.open(KAKAO_CHANNEL_URL, '_blank');
       });
     });
   }
